@@ -19,6 +19,23 @@ class WeatherProductTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, WeatherProductType::class);
     }
 
+    /**
+     * @param $weather
+     * @return WeatherProductType[] Returns an array of ProductWeatherCondition objects
+     */
+
+    public function findByWeatherType($weather)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.forecastName = :weather')
+            ->setParameter('weather', $weather)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return WeatherProductType[] Returns an array of WeatherProductType objects
     //  */
